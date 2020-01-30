@@ -9,6 +9,7 @@ import string
 # string.ascii_letters is ascii_lowercase + ascii_uppercase
 # string.printable is digits + ascii_letters + punctuation + whitespace
 
+strings = string.digits + string.ascii_lowercase
 
 def decode(digits, base):
     """Decode given digits in given base to number in base 10.
@@ -18,7 +19,10 @@ def decode(digits, base):
     # Handle up to base 36 [0-9a-z]
     assert 2 <= base <= 36, 'base is out of range: {}'.format(base)
     # TODO: Decode digits from binary (base 2)
-    # ...
+    decode = 0
+    for i, num in enumerate(reversed(digits)):
+        decode += base**i * strings.index(num)
+    return decode
     # TODO: Decode digits from hexadecimal (base 16)
     # ...
     # TODO: Decode digits from any base (2 up to 36)
@@ -35,6 +39,11 @@ def encode(number, base):
     # Handle unsigned numbers only for now
     assert number >= 0, 'number is negative: {}'.format(number)
     # TODO: Encode number in binary (base 2)
+    if number < base:
+        return strings[number]
+    number, remainder = divmod(number, base)
+
+    return encode(number, base) + strings[mod]
     # ...
     # TODO: Encode number in hexadecimal (base 16)
     # ...
