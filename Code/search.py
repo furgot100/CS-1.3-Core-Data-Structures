@@ -10,6 +10,9 @@ def linear_search(array, item):
 
 def linear_search_iterative(array, item):
     # loop over all array values until item is found
+    '''Best Case: O(1) item is at the beginning of array
+        Worst Case: O(n) item is near the end of array
+        '''
     for index, value in enumerate(array):
         if item == value:
             return index  # found
@@ -17,8 +20,10 @@ def linear_search_iterative(array, item):
 
 
 def linear_search_recursive(array, item, index=0):
-    # TODO: implement linear search recursively here
-    # 
+    #implement linear search recursively here
+    '''Best Case: O(1) item is at the beginning of array
+        Worst Case: O(n) item is near the end of array
+    ''' 
     if index > (len(array)-1):
         return None
 
@@ -40,7 +45,10 @@ def binary_search(array, item):
 
 def binary_search_iterative(array, item):
     '''Should search through the array by halfing off array till array has one and only one answer. If it isn't there
-    raise and error(?). Should not go past zero. Is a loop'''
+    raise and error(?). Should not go past zero. Is a loop
+    Best Case: O(1) Item is the middle item
+    Worst Case: O(Logn) last item in the search
+    '''
     # implement binary search iteratively here
     left = 0 
     right = len(array) - 1
@@ -59,7 +67,10 @@ def binary_search_iterative(array, item):
 
 
 def binary_search_recursive(array, item, left=None, right=None):
-    '''Same as above but instead of loop should repeat through the list'''
+    '''Same as above but instead of loop should repeat through the list
+    Best Case: O(1) Item is the middle item
+    Worst Case: O(Logn) last item in the search
+    '''
     # TODO: implement binary search recursively here
     if left == None:
         left = 0
