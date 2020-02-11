@@ -56,43 +56,57 @@ class LinkedList(object):
 
     def length(self):
         """Return the length of this linked list by traversing its nodes.
-        Best and worst case running time: ??? under what conditions? [TODO]"""
+        Best and worst case running time: O(1) Instantly access size"""
         # Node counter initialized to zero
-        node_count = 0
-        # Start at the head node
-        node = self.head
-        # Loop until the node is None, which is one node too far past the tail
-        while node is not None:
-            # Count one for this node
-            node_count += 1
-            # Skip to the next node
-            node = node.next
-        # Now node_count contains the number of nodes
-        return node_count
+        return self.size
 
     def get_at_index(self, index):
         """Return the item at the given index in this linked list, or
         raise ValueError if the given index is out of range of the list size.
-        Best case running time: ??? under what conditions? [TODO]
-        Worst case running time: ??? under what conditions? [TODO]"""
+        Best case running time: O(1) at the head
+        Worst case running time: O(n) at the tail"""
         # Check if the given index is out of range and if so raise an error
         if not (0 <= index < self.size):
             raise ValueError('List index out of range: {}'.format(index))
         # TODO: Find the node at the given index and return its data
+        node = self.head
+        for i in range(index):
+            if i == index:
+                return node.data
+            node = node.next
+        return node.data
 
     def insert_at_index(self, index, item):
         """Insert the given item at the given index in this linked list, or
         raise ValueError if the given index is out of range of the list size.
-        Best case running time: ??? under what conditions? [TODO]
-        Worst case running time: ??? under what conditions? [TODO]"""
+        Best case running time: O(1) when empty or index of 0 [TODO]
+        Worst case running time: O(n) at the end of list [TODO]"""
         # Check if the given index is out of range and if so raise an error
         if not (0 <= index <= self.size):
             raise ValueError('List index out of range: {}'.format(index))
         # TODO: Find the node before the given index and insert item after it
+        new = Node(item)
+
+        if self.is_empty:
+            self.head, self.tail = new, new
+            self.size += 1
+        elif index == 0:
+            self.prepend(item)
+        elif index == self.length():
+            self.append(item)
+        else:
+            node = self.head
+            for _ in range(index - 1):
+                node = node.next
+            new.next = node
+            node = new
+            self.size += 1
+    
+
 
     def append(self, item):
         """Insert the given item at the tail of this linked list.
-        Best and worst case running time: ??? under what conditions? [TODO]"""
+        Best and worst case running time: O(1) pointer of tail"""
         # Create a new node to hold the given item
         new_node = Node(item)
         # Check if this linked list is empty
@@ -104,10 +118,11 @@ class LinkedList(object):
             self.tail.next = new_node
         # Update tail to new node regardless
         self.tail = new_node
+        self.size += 1
 
     def prepend(self, item):
         """Insert the given item at the head of this linked list.
-        Best and worst case running time: ??? under what conditions? [TODO]"""
+        Best and worst case running time: O(1) adds item to where the head is pointing"""
         # Create a new node to hold the given item
         new_node = Node(item)
         # Check if this linked list is empty
@@ -119,6 +134,7 @@ class LinkedList(object):
             new_node.next = self.head
         # Update head to new node regardless
         self.head = new_node
+        self.size += 1
 
     def find(self, quality):
         """Return an item from this linked list satisfying the given quality.
@@ -141,16 +157,22 @@ class LinkedList(object):
     def replace(self, old_item, new_item):
         """Replace the given old_item in this linked list with given new_item
         using the same node, or raise ValueError if old_item is not found.
-        Best case running time: ??? under what conditions? [TODO]
-        Worst case running time: ??? under what conditions? [TODO]"""
+        Best case running time: O(1) near the head of list
+        Worst case running time: O(n) near the tail or not even in the list"""
         # TODO: Find the node containing the given old_item and replace its
         # data with new_item, without creating a new node object
-        pass
+        node = self.head
+        while node is not None:
+            if node.data == old_item:
+                node.data = new_item
+                return
+            node = node.next
+        raise ValueError('Item not found: {}'.format(old_item))
 
     def delete(self, item):
         """Delete the given item from this linked list, or raise ValueError.
-        Best case running time: ??? under what conditions? [TODO]
-        Worst case running time: ??? under what conditions? [TODO]"""
+        Best case running time: O(1) item at the head
+        Worst case running time: O(n) when the item at tail or not in list"""
         # Start at the head node
         node = self.head
         # Keep track of the node before the one containing the given item
