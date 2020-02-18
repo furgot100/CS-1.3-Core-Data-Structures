@@ -50,14 +50,14 @@ def binary_search_iterative(array, item):
     Worst Case: O(Logn) last item in the search
     '''
     # implement binary search iteratively here
-    left = 0 
-    right = len(array) - 1
-    while left >= right:
-        mid = (left + right) // 2
+    min = 0 
+    max = len(array) - 1
+    while max >= min:
+        mid = (max + min) // 2
         if item > array[mid]:
-            left = mid + 1
+            min = mid + 1
         elif item < array[mid]:
-            right = mid - 1
+            max = mid - 1
         else:
             return mid
     return None
@@ -77,7 +77,7 @@ def binary_search_recursive(array, item, left=None, right=None):
         right = len(array) - 1
     if right >= left:
         target = (right + left) // 2
-        if item >array[target]:
+        if item > array[target]:
             return binary_search_recursive(array, item, target + 1, right)
         elif item < array[target]:
             return binary_search_recursive(array, item, left, target - 1)
