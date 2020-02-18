@@ -4,12 +4,8 @@ def contains(text, pattern):
     """Return a boolean indicating whether pattern occurs in text."""
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
-    if len(pattern) < 1:
-        return True
-    for i in range(0, len(text) - len(pattern +1)):
-        if text[i:(i+len(pattern))] == pattern:
-            return True
-    return False
+    
+    return find_index(text, pattern) != None
 
 def find_index(text, pattern):
     """Return the starting index of the first occurrence of pattern in text,
@@ -18,7 +14,7 @@ def find_index(text, pattern):
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     if len(pattern) < 1:
         return 0
-    for i in range(0, (len(text)- len(pattern) + 1)):
+    for i in range(0, (len(text) - len(pattern) + 1)):
         if text[i:(i+len(pattern))] == pattern:
             return i
     return None 
