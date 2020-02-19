@@ -21,28 +21,32 @@ class LinkedStack(object):
 
     def is_empty(self):
         """Return True if this stack is empty, or False otherwise."""
-        return self.list.length == 0
+        if self.length() == 0:
+            return True
+        else:
+            return False
 
     def length(self):
         """Return the number of items in this stack."""
-        return self.list.length
+        return self.list.length()
 
     def push(self, item):
         """Insert the given item on the top of this stack.
-        Running time: O(???) – Why? [TODO]"""
+        Running time: O(1) returns item at head"""
         self.list.prepend(item)
 
     def peek(self):
         """Return the item on the top of this stack without removing it,
         or None if this stack is empty."""
-        if not self.is_empty():
+        if self.is_empty():
+            return None
+        else:
             return self.list.head.data
-        return None
 
     def pop(self):
         """Remove and return the item on the top of this stack,
         or raise ValueError if this stack is empty.
-        Running time: O(???) – Why? [TODO]"""
+        Running time: O(1) – Returns item at the head node"""
         if self.is_empty():
             raise ValueError("Queue is Empty")
 
@@ -79,7 +83,7 @@ class ArrayStack(object):
 
     def push(self, item):
         """Insert the given item on the top of this stack.
-        Running time: O(???) – Why? [TODO]"""
+        Running time: O(1) – adding item to the end"""
         self.list.append(item)
 
     def peek(self):
@@ -92,11 +96,11 @@ class ArrayStack(object):
     def pop(self):
         """Remove and return the item on the top of this stack,
         or raise ValueError if this stack is empty.
-        Running time: O(???) – Why? [TODO]"""
-        top = self.list[(self.length()) - 1]
-        self.list.pop(self.length() - 1)
+        Running time: O(1) – removing last index"""
+        if self.is_empty():
+            raise ValueError("stack is empty")
 
-        return top
+        return self.list.pop(len(self.list) - 1)
 
 
 # Implement LinkedStack and ArrayStack above, then change the assignment below

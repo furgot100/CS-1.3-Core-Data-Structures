@@ -150,6 +150,7 @@ class HashTable(object):
             new_size = len(self.buckets) / 2  # Half size
         current_item = self.items()
 
+        #  Resize Code
         self.size = 0
         self.buckets = [LinkedList() for i in range(new_size)]
 
