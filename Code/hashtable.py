@@ -113,6 +113,7 @@ class HashTable(object):
             # In this case, the given key's value is being updated
             # Remove the old key-value entry from the bucket first
             bucket.delete(entry)
+            self.size -= 1
         # Insert the new key-value entry into the bucket in either case
         bucket.append((key, value))
         self.size += 1
@@ -133,6 +134,9 @@ class HashTable(object):
         if entry is not None:  # Found
             # Remove the key-value entry from the bucket
             bucket.delete(entry)
+            self.size -= 1
+            if self.load_factor() < 0.25:
+                self._resize(0)
         else:  # Not found
             raise KeyError('Key not found: {}'.format(key))
 
@@ -147,7 +151,7 @@ class HashTable(object):
             new_size = len(self.buckets) * 2  # Double size
         # Option to reduce size if buckets are sparsely filled (low load factor)
         elif new_size is 0:
-            new_size = len(self.buckets) / 2  # Half size
+            new_size = len(self.buckets) // 2  # Half size
         current_item = self.items()
 
         #  Resize Code
