@@ -58,7 +58,12 @@ class LinkedList(object):
         """Return the length of this linked list by traversing its nodes.
         Best and worst case running time: O(1) Instantly access size"""
         # Node counter initialized to zero
-        return self.size
+        counter = 0
+        node = self.head
+        while node is not None:
+            counter += 1
+            node = node.next
+        return counter
 
     def get_at_index(self, index):
         """Return the item at the given index in this linked list, or
@@ -70,11 +75,12 @@ class LinkedList(object):
             raise ValueError('List index out of range: {}'.format(index))
         # TODO: Find the node at the given index and return its data
         node = self.head
-        for i in range(index):
-            if i == index:
+        given = 0 
+        while node is not None:
+            if index == given:
                 return node.data
             node = node.next
-        return node.data
+            given += 1
 
     def insert_at_index(self, index, item):
         """Insert the given item at the given index in this linked list, or
@@ -85,22 +91,27 @@ class LinkedList(object):
         if not (0 <= index <= self.size):
             raise ValueError('List index out of range: {}'.format(index))
         # TODO: Find the node before the given index and insert item after it
-        new = Node(item)
 
-        if self.is_empty:
-            self.head, self.tail = new, new
-            self.size += 1
-        elif index == 0:
+        if index == 0:
             self.prepend(item)
-        elif index == self.length():
+        elif index == self.size:
             self.append(item)
         else:
             node = self.head
-            for _ in range(index - 1):
+            new_node = Node(item)
+            given = 1
+            while node is not None:
+                if index == given:
+                    if index != self.length():
+                        new_node.next = node.next
+                        node.next = new_node
+                    else:
+                        node.next = new_node
+                        self.tail = new_node
+                    self.size += 1
+                    return
+                given += 1
                 node = node.next
-            new.next = node
-            node = new
-            self.size += 1
     
 
 
@@ -162,7 +173,7 @@ class LinkedList(object):
         # TODO: Find the node containing the given old_item and replace its
         # data with new_item, without creating a new node object
         node = self.head
-        while node is not None:
+        while node:
             if node.data == old_item:
                 node.data = new_item
                 return
