@@ -1,20 +1,20 @@
 #!python
 
 def contains(text, pattern):
-    """Return a boolean indicating whether pattern occurs in text."""
+    """Return a boolean indicating whether pattern occurs in text.O(M * n) m is length of pattern and is n is text"""
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     
     return find_index(text, pattern) != None
 
-def find_index(text, pattern):
+def find_index(text, pattern, set_index=0):
     """Return the starting index of the first occurrence of pattern in text,
-    or None if not found."""
+    or None if not found. O(M * n) m is length of pattern and is n is text"""
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     if len(pattern) < 1:
         return 0
-    for i in range(0, (len(text) - len(pattern) + 1)):
+    for i in range(set_index, (len(text) - len(pattern) + 1)):
         if text[i:(i+len(pattern))] == pattern:
             return i
     return None 
@@ -22,14 +22,24 @@ def find_index(text, pattern):
 
 def find_all_indexes(text, pattern):
     """Return a list of starting indexes of all occurrences of pattern in text,
-    or an empty list if not found."""
+    or an empty list if not found. O(M * n) m is length of pattern and is n is text"""
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     indices = []
-    for i in range(0, (len(text) - len(pattern) + 1)):
+    index = 0
+    flag = True
+    while flag:
+        next_index = find_index(text, pattern, index)
+        if next_index == None:
+            flag = False
+        else:
+            indices.append(next_index)
+            index = next_index + 1
+
+    '''for i in range(0, (len(text) - len(pattern) + 1)):
         if len(indices) <= len(text) - 1:
             if text[i:(i+len(pattern))] == pattern:
-                indices.append(i)
+                indices.append(i)'''
     return indices
 
 
