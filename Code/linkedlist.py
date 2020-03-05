@@ -202,6 +202,7 @@ class LinkedList(object):
                 node = node.next
         # Check if we found the given item or we never did and reached the tail
         if found:
+            self.size -= 1
             # Check if we found a node in the middle of this linked list
             if node is not self.head and node is not self.tail:
                 # Update the previous node to skip around the found node
