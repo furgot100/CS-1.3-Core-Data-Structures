@@ -5,6 +5,7 @@ class HashSet(object):
         '''Create new empty set and adds elements'''
         self.hash = HashTable()
         self.size = 0
+        
         if elements is not None:
             for item in elements:
                 self.add(item)
@@ -40,29 +41,35 @@ class HashSet(object):
 
     def union(self, other_set):
         '''Return new set with values from all sets
-        Time Complexity: O(n1 + n2)'''
+        Time Complexity: O(m + n)'''
         new_set = HashSet()
-        for i in self.hash.values():
-            new_set.add(i)
+        
+        for i in self.hash.values(): # O(n)
+            new_set.add(i) 
+        
         for i in other_set.hash.values():
-            if not new_set.contains(i):
-                new_set.add(i)
+            new_set.add(i)
 
         return new_set
 
     def intersection(self, other_set):
         '''Return a set that contains values that are in both sets
-        Time Complexity: O(n) going through each element'''
+        Time Complexity: O(m) going through each element'''
+        
         new_set = HashSet()
-        for i in self.hash.values():
-            if other_set.contains(i):
-                new_set.add(i)
-        return new_set
+        if self.size < other_set.size:
+            for i in self.hash.values():  
+                if other_set.contains(i): #log m; m=self, n=other
+                    new_set.add(i)  #log(min(m,n))
+            
+            return new_set
 
     def difference(self, other_set):
         '''Return set that has value from only one set and not in the other
         Time Complexity: O(n)'''
+        
         new_set = HashSet()
+        
         for i in self.hash.values():
             if not other_set.contains(i):
                 new_set.add(i)

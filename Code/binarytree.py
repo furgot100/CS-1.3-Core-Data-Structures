@@ -267,7 +267,7 @@ class BinarySearchTree(object):
         if node.left is not None:
             self._traverse_pre_order_recursive(node.left, visit)
         # TODO: Traverse right subtree, if it exists
-        if node.rigt is not None:
+        if node.right is not None:
             self._traverse_pre_order_recursive(node.right, visit)
 
     def _traverse_pre_order_iterative(self, node, visit):
