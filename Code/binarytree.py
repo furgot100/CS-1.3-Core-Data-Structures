@@ -1,5 +1,5 @@
 #!python
-from queue import Queue
+from queue import LinkedQueue
 
 class BinaryTreeNode(object):
 
@@ -62,7 +62,7 @@ class BinarySearchTree(object):
     def height(self):
         """Return the height of this tree (the number of edges on the longest
         downward path from this tree's root node to a descendant leaf node).
-        TODO: Best and worst case running time: ??? under what conditions?"""
+        TODO: Best and worst case running time: O(h) depends on height of tree"""
         # TODO: Check if root node has a value and if so calculate its height
         return self.root.height()
 
@@ -322,11 +322,11 @@ class BinarySearchTree(object):
         TODO: Running time: O(n) Search whole tree
         TODO: Memory usage: O(n) Depends of size of tree"""
         # TODO: Create queue to store nodes not yet traversed in level-order
-        queue = Queue()
+        queue = LinkedQueue()
         # TODO: Enqueue given starting node
         queue.enqueue(start_node)
         # TODO: Loop until queue is empty
-        while queue.length() > 0:
+        while not queue.is_empty():
             # TODO: Dequeue node at front of queue
             node = queue.dequeue()
             # TODO: Visit this node's data with given function

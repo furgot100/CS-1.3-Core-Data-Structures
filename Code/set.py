@@ -25,8 +25,6 @@ class HashSet(object):
         '''Adds element, if exist, raise KeyError
         Time Complexity: O(1) avg, but O(n) when resizing'''
         if self.contains(element):
-            raise KeyError('Cannot add element that exist')
-        else:
             self.hash.set(element,element)
             self.size += 1
 
@@ -57,12 +55,10 @@ class HashSet(object):
         Time Complexity: O(m) going through each element'''
         
         new_set = HashSet()
-        if self.size < other_set.size:
-            for i in self.hash.values():  
-                if other_set.contains(i): #log m; m=self, n=other
-                    new_set.add(i)  #log(min(m,n))
-            
-            return new_set
+        for i in self.hash.values():  
+            if other_set.contains(i): #log m; m=self, n=other
+                new_set.add(i)  #log(min(m,n))    
+        return new_set
 
     def difference(self, other_set):
         '''Return set that has value from only one set and not in the other
